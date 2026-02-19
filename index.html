@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natalie & Jordi | October 17, 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2642;
+            --cream: #f5f2eb;
+            --cream-dark: #e8e4d9;
+            --terracotta: #c45d3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--navy);
+            line-height: 1.6;
+        }
+
+        /* Block Print Border SVG Pattern */
+        .folk-border {
+            position: relative;
+            background: var(--cream);
+        }
+
+        .folk-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='60' viewBox='0 0 120 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a2642'%3E%3C!-- Leaf pattern --%3E%3Cpath d='M60 10 L65 25 L60 22 L55 25 Z'/%3E%3Cpath d='M40 15 L45 28 L40 25 L35 28 Z'/%3E%3Cpath d='M80 15 L85 28 L80 25 L75 28 Z'/%3E%3Cpath d='M20 12 L25 26 L20 23 L15 26 Z'/%3E%3Cpath d='M100 12 L105 26 L100 23 L95 26 Z'/%3E%3C!-- Small dots --%3E%3Ccircle cx='10' cy='30' r='3'/%3E%3Ccircle cx='30' cy='35' r='2'/%3E%3Ccircle cx='50' cy='32' r='2'/%3E%3Ccircle cx='70' cy='35' r='2'/%3E%3Ccircle cx='90' cy='32' r='2'/%3E%3Ccircle cx='110' cy='30' r='3'/%3E%3C!-- Bottom leaves --%3E%3Cpath d='M25 45 L30 55 L25 52 L20 55 Z'/%3E%3Cpath d='M55 42 L60 55 L55 51 L50 55 Z'/%3E%3Cpath d='M85 45 L90 55 L85 52 L80 55 Z'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--navy);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--terracotta);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-frame {
+            border: 3px solid var(--navy);
+            padding: 3rem 4rem;
+            position: relative;
+            background: var(--cream);
+        }
+
+        /* Corner decorations */
+        .hero-frame::before,
+        .hero-frame::after {
+            content: '✦';
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--navy);
+        }
+
+        .hero-frame::before {
+            top: -12px;
+            left: -12px;
+        }
+
+        .hero-frame::after {
+            top: -12px;
+            right: -12px;
+        }
+
+        .corner-bottom-left,
+        .corner-bottom-right {
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--navy);
+        }
+
+        .corner-bottom-left {
+            bottom: -12px;
+            left: -12px;
+        }
+
+        .corner-bottom-right {
+            bottom: -12px;
+            right: -12px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .ampersand {
+            font-size: 2rem;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        .hero .date {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Decorative flower illustrations */
+        .flower-left,
+        .flower-right {
+            position: absolute;
+            width: 120px;
+            height: auto;
+        }
+
+        .flower-left {
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .flower-right {
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%) scaleX(-1);
+        }
+
+        /* Folk art flower SVG */
+        .folk-flower {
+            fill: var(--navy);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .section-divider span {
+            font-size: 1.2rem;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            width: 100px;
+            height: 2px;
+            background: var(--navy);
+        }
+
+        /* Event Details */
+        .event-card {
+            background: white;
+            border: 2px solid var(--navy);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .event-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .event-card p {
+            margin: 0.5rem 0;
+        }
+
+        /* Story Section */
+        .story-content {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Travel Section */
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .travel-card {
+            background: white;
+            border: 2px solid var(--navy);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .travel-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 5rem 2rem;
+            max-width: none;
+            text-align: center;
+        }
+
+        .rsvp-section h2 {
+            color: var(--cream);
+        }
+
+        .rsvp-form {
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--cream);
+            background: transparent;
+            color: var(--cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(245, 242, 235, 0.6);
+        }
+
+        .form-group select option {
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .submit-btn {
+            background: var(--cream);
+            color: var(--navy);
+            border: none;
+            padding: 1rem 3rem;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--terracotta);
+            color: var(--cream);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--cream-dark);
+        }
+
+        footer p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-frame {
+                padding: 2rem;
+            }
+
+            .flower-left,
+            .flower-right {
+                display: none;
+            }
+
+            nav {
+                gap: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#details">Details</a>
+        <a href="#story">Our Story</a>
+        <a href="#travel">Travel</a>
+        <a href="#rsvp">RSVP</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Left decorative flower -->
+        <svg class="flower-left" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <g class="folk-flower">
+                <!-- Stem -->
+                <rect x="28" y="60" width="4" height="140"/>
+                <!-- Leaves on stem -->
+                <path d="M28 80 Q10 70 15 90 Q20 100 28 95"/>
+                <path d="M32 100 Q50 90 45 110 Q40 120 32 115"/>
+                <path d="M28 130 Q10 120 15 140 Q20 150 28 145"/>
+                <path d="M32 160 Q50 150 45 170 Q40 180 32 175"/>
+                <!-- Tulip flower at top -->
+                <path d="M30 60 Q15 40 20 20 Q25 5 30 0 Q35 5 40 20 Q45 40 30 60"/>
+                <path d="M30 55 Q25 45 28 35"/>
+                <path d="M30 55 Q35 45 32 35"/>
+            </g>
+        </svg>
+
+        <div class="hero-frame">
+            <span class="corner-bottom-left">✦</span>
+            <span class="corner-bottom-right">✦</span>
+            <h1>Natalie</h1>
+            <span class="ampersand">&</span>
+            <h1>Jordi</h1>
+            <p class="date">October 17, 2026</p>
+        </div>
+
+        <!-- Right decorative flower -->
+        <svg class="flower-right" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+            <g class="folk-flower">
+                <!-- Stem -->
+                <rect x="28" y="60" width="4" height="140"/>
+                <!-- Leaves on stem -->
+                <path d="M28 80 Q10 70 15 90 Q20 100 28 95"/>
+                <path d="M32 100 Q50 90 45 110 Q40 120 32 115"/>
+                <path d="M28 130 Q10 120 15 140 Q20 150 28 145"/>
+                <path d="M32 160 Q50 150 45 170 Q40 180 32 175"/>
+                <!-- Tulip flower at top -->
+                <path d="M30 60 Q15 40 20 20 Q25 5 30 0 Q35 5 40 20 Q45 40 30 60"/>
+                <path d="M30 55 Q25 45 28 35"/>
+                <path d="M30 55 Q35 45 32 35"/>
+            </g>
+        </svg>
+    </section>
+
+    <!-- Details Section -->
+    <section id="details">
+        <h2>Wedding Details</h2>
+
+        <div class="section-divider">
+            <span>✦</span>
+        </div>
+
+        <div class="event-card">
+            <h3>The Ceremony & Reception</h3>
+            <p><strong>Saturday, October 17, 2026</strong></p>
+            <p>Ceremony at 4:00 PM</p>
+            <p>Dinner & Dancing to Follow</p>
+            <br>
+            <p><strong>Venue Name</strong></p>
+            <p>123 Beautiful Lane</p>
+            <p>City, State</p>
+        </div>
+
+        <div class="event-card">
+            <h3>Attire</h3>
+            <p>Cocktail Attire</p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story">
+        <h2>Our Story</h2>
+
+        <div class="section-divider">
+            <span>✦</span>
+        </div>
+
+        <div class="story-content">
+            <p>This is where you can share your story — how you met, your first date,
+            the proposal, or any other moments you'd like to share with your guests.</p>
+            <p>We can't wait to celebrate with you!</p>
+        </div>
+    </section>
+
+    <!-- Travel Section -->
+    <section id="travel">
+        <h2>Travel & Accommodations</h2>
+
+        <div class="section-divider">
+            <span>✦</span>
+        </div>
+
+        <div class="travel-grid">
+            <div class="travel-card">
+                <h3>Where to Stay</h3>
+                <p>We've reserved a block of rooms at:</p>
+                <p><strong>Hotel Name</strong></p>
+                <p>Use code DUNNWEDDING for group rate</p>
+            </div>
+
+            <div class="travel-card">
+                <h3>Getting There</h3>
+                <p>Nearest Airport:</p>
+                <p><strong>Airport Name (XXX)</strong></p>
+                <p>Approximately 30 minutes from venue</p>
+            </div>
+
+            <div class="travel-card">
+                <h3>Things to Do</h3>
+                <p>Coming from out of town?</p>
+                <p>Check out our list of local favorites!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp-section" id="rsvp">
+        <h2>RSVP</h2>
+
+        <p>Please respond by September 1, 2026</p>
+
+        <form class="rsvp-form">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="First and Last Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="attending">Will you be attending?</label>
+                <select id="attending" name="attending" required>
+                    <option value="">Please select</option>
+                    <option value="yes">Joyfully Accepts</option>
+                    <option value="no">Regretfully Declines</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="guests">Number of Guests</label>
+                <select id="guests" name="guests">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dietary">Dietary Restrictions</label>
+                <textarea id="dietary" name="dietary" rows="3" placeholder="Please let us know of any dietary restrictions"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send RSVP</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Natalie & Jordi</p>
+        <p style="font-family: 'Josefin Sans', sans-serif; font-size: 0.9rem; margin-top: 0.5rem; font-style: normal;">
+            October 17, 2026
+        </p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission placeholder
+        document.querySelector('.rsvp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your RSVP! (This is a placeholder - connect to your preferred form service)');
+        });
+    </script>
+</body>
+</html>
