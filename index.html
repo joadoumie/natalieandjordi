@@ -333,6 +333,65 @@
             color: var(--cream);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Radio toggle buttons */
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border: 2px solid var(--cream);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--cream);
+        }
+
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-option:has(input:checked) {
+            background: var(--cream);
+            color: var(--navy);
+        }
+
+        .radio-option:hover {
+            background: rgba(245, 242, 235, 0.15);
+        }
+
+        /* RSVP success state */
+        .rsvp-success {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .rsvp-success h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-style: italic;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+
+        .rsvp-success p {
+            color: var(--cream);
+            font-size: 1.1rem;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -504,41 +563,67 @@
 
         <p>Please respond by September 1, 2026</p>
 
-        <form class="rsvp-form">
+        <form class="rsvp-form" id="rsvpForm">
             <div class="form-group">
-                <label for="name">Your Name</label>
+                <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="First and Last Name" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                <input type="email" id="email" name="email" placeholder="your@email.com">
             </div>
 
             <div class="form-group">
-                <label for="attending">Will you be attending?</label>
-                <select id="attending" name="attending" required>
-                    <option value="">Please select</option>
-                    <option value="yes">Joyfully Accepts</option>
-                    <option value="no">Regretfully Declines</option>
-                </select>
+                <label>Will you be attending?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="attending" value="yes" required>
+                        Joyfully Accepts
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="attending" value="no">
+                        Regretfully Declines
+                    </label>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="guests">Number of Guests</label>
-                <select id="guests" name="guests">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+            <div class="form-group" id="guestsGroup" style="display:none;">
+                <label>Party Size</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="guests" value="1">
+                        Just Me
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="guests" value="2">
+                        Myself & a Guest
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="guestNameGroup" style="display:none;">
+                <label for="guestName">Guest's Name</label>
+                <input type="text" id="guestName" name="guestName" placeholder="First and Last Name">
             </div>
 
             <div class="form-group">
                 <label for="dietary">Dietary Restrictions</label>
-                <textarea id="dietary" name="dietary" rows="3" placeholder="Please let us know of any dietary restrictions"></textarea>
+                <textarea id="dietary" name="dietary" rows="2" placeholder="Any allergies or dietary needs?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Note to the Couple <span style="opacity:0.5; text-transform:none;">(optional)</span></label>
+                <textarea id="note" name="note" rows="3" placeholder="We'd love to hear from you!"></textarea>
             </div>
 
             <button type="submit" class="submit-btn">Send RSVP</button>
         </form>
+
+        <div class="rsvp-success" id="rsvpSuccess">
+            <h3>Thank you!</h3>
+            <p>We can't wait to celebrate with you.</p>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -555,16 +640,71 @@
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
+                target.scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Form submission placeholder
-        document.querySelector('.rsvp-form').addEventListener('submit', function(e) {
+        // -------------------------------------------------------
+        // RSVP Form — paste your Apps Script Web App URL below
+        // -------------------------------------------------------
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP4ZqVKEJ-CmbBn1J6IJeyMcLdgVKiR-6wWivUfskct66aK9gQE-WhDHAAsk69Z0Bh/exec';
+
+        // Show/hide conditional fields
+        document.querySelectorAll('input[name="attending"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const guestsGroup = document.getElementById('guestsGroup');
+                const guestNameGroup = document.getElementById('guestNameGroup');
+                if (this.value === 'yes') {
+                    guestsGroup.style.display = 'block';
+                } else {
+                    guestsGroup.style.display = 'none';
+                    guestNameGroup.style.display = 'none';
+                    document.querySelectorAll('input[name="guests"]').forEach(r => r.checked = false);
+                }
+            });
+        });
+
+        document.querySelectorAll('input[name="guests"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('guestNameGroup').style.display =
+                    this.value === '2' ? 'block' : 'none';
+            });
+        });
+
+        // Form submission
+        document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Thank you for your RSVP! (This is a placeholder - connect to your preferred form service)');
+            const form = e.target;
+            const btn = form.querySelector('.submit-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const attending = form.querySelector('input[name="attending"]:checked');
+            const guests = form.querySelector('input[name="guests"]:checked');
+
+            const data = {
+                name: form.elements.name.value,
+                email: form.elements.email.value,
+                attending: attending ? attending.value : '',
+                guests: guests ? guests.value : '1',
+                guestName: form.elements.guestName.value,
+                dietary: form.elements.dietary.value,
+                note: form.elements.note.value,
+            };
+
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(data)
+                });
+            } catch (err) {
+                console.error('Submission error:', err);
+            }
+
+            // Show success (can't read response with no-cors, email backup catches any failures)
+            form.style.display = 'none';
+            document.getElementById('rsvpSuccess').style.display = 'block';
         });
     </script>
 </body>
