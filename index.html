@@ -822,6 +822,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="guest-onsite" id="guestOnsite_${i}" style="display:none;">
+                        <label>Are you staying onsite?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="onsite_${i}" value="yes"> Yes
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="onsite_${i}" value="no"> No
+                            </label>
+                        </div>
+                    </div>
                     <div class="guest-dietary" id="guestDietary_${i}" style="display:none;">
                         <label>Dietary Restrictions</label>
                         <textarea name="dietary_${i}" rows="2" placeholder="Any allergies or dietary needs?"></textarea>
@@ -829,11 +840,12 @@
 
                 container.appendChild(block);
 
-                // Show/hide travel dates and dietary based on attendance selection
+                // Show/hide travel dates, onsite, and dietary based on attendance selection
                 block.querySelectorAll(`input[name="attend_${i}"]`).forEach(radio => {
                     radio.addEventListener('change', function() {
                         const show = this.value === 'yes';
                         document.getElementById(`travelDates_${i}`).style.display = show ? 'block' : 'none';
+                        document.getElementById(`guestOnsite_${i}`).style.display = show ? 'block' : 'none';
                         document.getElementById(`guestDietary_${i}`).style.display = show ? 'block' : 'none';
                     });
                 });
@@ -951,12 +963,15 @@
                     if (arriveDate === 'thu' && arriveTime) arrives += ` (${DINNER_LABELS[arriveTime]})`;
                 }
 
+                const onsiteRadio = attending ? form.querySelector(`input[name="onsite_${i}"]:checked`) : null;
+
                 return {
                     name: guestName,
                     group: selectedGroup,
                     email: form.elements.email.value,
                     attending: radio ? (radio.value === 'yes' ? 'Yes' : 'No') : 'No response',
                     arrives,
+                    onsite: onsiteRadio ? (onsiteRadio.value === 'yes' ? 'Yes' : 'No') : '',
                     dietary: attending ? (form.querySelector(`textarea[name="dietary_${i}"]`).value || '').trim() : '',
                     note: form.elements.note.value,
                 };
