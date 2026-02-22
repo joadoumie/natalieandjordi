@@ -405,6 +405,46 @@
             font-style: italic;
         }
 
+        /* Autocomplete combobox */
+        .autocomplete-wrapper {
+            position: relative;
+        }
+
+        .autocomplete-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border: 2px solid var(--cream);
+            border-top: none;
+            background: var(--navy);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-dropdown.open {
+            display: block;
+        }
+
+        .autocomplete-dropdown li {
+            padding: 0.75rem;
+            color: var(--cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .autocomplete-dropdown li:hover,
+        .autocomplete-dropdown li.active {
+            background: rgba(245, 242, 235, 0.15);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -565,8 +605,12 @@
 
         <form class="rsvp-form" id="rsvpForm">
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" placeholder="First and Last Name" required>
+                <label for="nameInput">Full Name</label>
+                <div class="autocomplete-wrapper">
+                    <input type="text" id="nameInput" autocomplete="off" placeholder="Start typing your name..." required>
+                    <ul id="nameDropdown" class="autocomplete-dropdown" role="listbox" aria-label="Guest names"></ul>
+                    <input type="hidden" id="name" name="name">
+                </div>
             </div>
 
             <div class="form-group">
@@ -671,6 +715,111 @@
             });
         });
 
+        // -------------------------------------------------------
+        // Autocomplete — load guest list and wire up combobox
+        // -------------------------------------------------------
+        const guestList = [
+            "Alicia Dunn & Aric Jacobson",
+            "Riad Adoumie & Khrystyna Pavlova & Benjamin Adoumie",
+            "Lara Adoumie",
+            "Maeva Adoumie & Behdad Kavianpour",
+            "Dominique Adoumie"
+        ];
+
+        const nameInput = document.getElementById('nameInput');
+        const nameHidden = document.getElementById('name');
+        const dropdown = document.getElementById('nameDropdown');
+
+        function renderDropdown(matches) {
+            dropdown.innerHTML = '';
+            if (matches.length === 0) {
+                dropdown.classList.remove('open');
+                return;
+            }
+            matches.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                li.setAttribute('role', 'option');
+                li.addEventListener('mousedown', function(e) {
+                    // mousedown fires before blur; prevent blur from closing first
+                    e.preventDefault();
+                    selectGuest(name);
+                });
+                dropdown.appendChild(li);
+            });
+            dropdown.classList.add('open');
+        }
+
+        function selectGuest(name) {
+            nameInput.value = name;
+            nameHidden.value = name;
+            nameInput.style.borderColor = '';
+            dropdown.classList.remove('open');
+            dropdown.innerHTML = '';
+        }
+
+        function getActiveItem() {
+            return dropdown.querySelector('li.active');
+        }
+
+        nameInput.addEventListener('input', function() {
+            nameHidden.value = '';
+            nameInput.style.borderColor = '';
+            const query = this.value.trim().toLowerCase();
+            if (!query) {
+                dropdown.classList.remove('open');
+                dropdown.innerHTML = '';
+                return;
+            }
+            const matches = guestList.filter(n => {
+                const words = n.toLowerCase().split(/\s+/);
+                return words.some((_, i) => words.slice(i).join(' ').startsWith(query));
+            });
+            renderDropdown(matches);
+        });
+
+        nameInput.addEventListener('keydown', function(e) {
+            const items = dropdown.querySelectorAll('li');
+            const active = getActiveItem();
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (!active) {
+                    items[0] && items[0].classList.add('active');
+                } else {
+                    active.classList.remove('active');
+                    const next = active.nextElementSibling;
+                    (next || items[0]).classList.add('active');
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (!active) {
+                    items[items.length - 1] && items[items.length - 1].classList.add('active');
+                } else {
+                    active.classList.remove('active');
+                    const prev = active.previousElementSibling;
+                    (prev || items[items.length - 1]).classList.add('active');
+                }
+            } else if (e.key === 'Enter') {
+                if (active) {
+                    e.preventDefault();
+                    selectGuest(active.textContent);
+                }
+            } else if (e.key === 'Escape') {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        nameInput.addEventListener('blur', function() {
+            // Small delay so mousedown on a list item can fire first
+            setTimeout(() => dropdown.classList.remove('open'), 150);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.autocomplete-wrapper')) {
+                dropdown.classList.remove('open');
+            }
+        });
+
         // Form submission
         document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -678,6 +827,14 @@
             const btn = form.querySelector('.submit-btn');
             btn.textContent = 'Sending...';
             btn.disabled = true;
+
+            const selectedName = document.getElementById('name').value;
+            if (!guestList.includes(selectedName)) {
+                document.getElementById('nameInput').style.borderColor = 'var(--terracotta)';
+                btn.textContent = 'Send RSVP';
+                btn.disabled = false;
+                return;
+            }
 
             const attending = form.querySelector('input[name="attending"]:checked');
             const guests = form.querySelector('input[name="guests"]:checked');
