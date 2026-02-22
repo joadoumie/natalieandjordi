@@ -732,7 +732,7 @@
         // -------------------------------------------------------
         // RSVP Form — paste your Apps Script Web App URL below
         // -------------------------------------------------------
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP4ZqVKEJ-CmbBn1J6IJeyMcLdgVKiR-6wWivUfskct66aK9gQE-WhDHAAsk69Z0Bh/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2SHsZVSciuLazqpmfJL4iAnLF1NOPTzrbaasWjhlgVIlvRDpZAqJvUMPP_uyFWp4/exec';
 
         // -------------------------------------------------------
         // Autocomplete — load guest list and wire up combobox
@@ -835,7 +835,7 @@
                     </div>
                     <div class="guest-dietary" id="guestDietary_${i}" style="display:none;">
                         <label>Dietary Restrictions</label>
-                        <textarea name="dietary_${i}" rows="2" placeholder="Any allergies or dietary needs?"></textarea>
+                        <textarea name="dietary_${i}" rows="2" placeholder="Any allergies or dietary needs?" autocomplete="off"></textarea>
                     </div>`;
 
                 container.appendChild(block);
