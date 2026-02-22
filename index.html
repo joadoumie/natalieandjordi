@@ -939,38 +939,30 @@
             const DATE_LABELS = { thu: 'Thu Oct 15', fri: 'Fri Oct 16', sat: 'Sat Oct 17' };
             const DINNER_LABELS = { dinner: 'Joining for the Arrival Dinner', after: 'Coming After Dinner' };
 
-            const guestAttendance = individuals.map((guestName, i) => {
+            const guests = individuals.map((guestName, i) => {
                 const radio = form.querySelector(`input[name="attend_${i}"]:checked`);
-                if (!radio) return `${guestName}: No response`;
-                if (radio.value === 'no') return `${guestName}: No`;
+                const attending = radio?.value === 'yes';
 
-                const arriveDate = form.querySelector(`select[name="arrive_date_${i}"]`).value;
-                const arriveTime = form.querySelector(`select[name="arrive_time_${i}"]`).value;
-
-                let line = `${guestName}: Yes`;
+                const arriveDate = attending ? (form.querySelector(`select[name="arrive_date_${i}"]`).value || '') : '';
+                const arriveTime = attending ? (form.querySelector(`select[name="arrive_time_${i}"]`).value || '') : '';
+                let arrives = '';
                 if (arriveDate) {
-                    line += ` | Arrives: ${DATE_LABELS[arriveDate]}`;
-                    if (arriveDate === 'thu' && arriveTime) line += ` (${DINNER_LABELS[arriveTime]})`;
+                    arrives = DATE_LABELS[arriveDate];
+                    if (arriveDate === 'thu' && arriveTime) arrives += ` (${DINNER_LABELS[arriveTime]})`;
                 }
-                return line;
-            }).join('\n');
 
-            const dietaryParts = individuals
-                .map((guestName, i) => {
-                    const radio = form.querySelector(`input[name="attend_${i}"]:checked`);
-                    if (!radio || radio.value !== 'yes') return null;
-                    const val = (form.querySelector(`textarea[name="dietary_${i}"]`).value || '').trim();
-                    return val ? `${guestName}: ${val}` : null;
-                })
-                .filter(Boolean);
+                return {
+                    name: guestName,
+                    group: selectedGroup,
+                    email: form.elements.email.value,
+                    attending: radio ? (radio.value === 'yes' ? 'Yes' : 'No') : 'No response',
+                    arrives,
+                    dietary: attending ? (form.querySelector(`textarea[name="dietary_${i}"]`).value || '').trim() : '',
+                    note: form.elements.note.value,
+                };
+            });
 
-            const data = {
-                name: selectedGroup,
-                email: form.elements.email.value,
-                attending: guestAttendance,
-                dietary: dietaryParts.join(' | '),
-                note: form.elements.note.value,
-            };
+            const data = { guests };
 
             try {
                 await fetch(APPS_SCRIPT_URL, {
