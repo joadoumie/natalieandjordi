@@ -51,13 +51,9 @@ function doPost(e) {
 }
 
 function sendConfirmationEmail(guests) {
-  // Collect unique emails to avoid sending duplicates
-  var sent = {};
-
   guests.forEach(function(g) {
     var email = (g.email || '').trim();
-    if (!email || sent[email]) return;
-    sent[email] = true;
+    if (!email) return;
 
     var firstName = (g.name || '').split(' ')[0];
 
