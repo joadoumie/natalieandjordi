@@ -450,8 +450,9 @@
 
     /* ── RSVP FORM ── */
     .rsvp-form {
-      max-width: 100%;
-      margin-top: 40px;
+      width: 100%;
+      max-width: 500px;
+      margin: 40px auto 0;
     }
     .rsvp-form .field {
       margin-bottom: 32px;
@@ -522,8 +523,175 @@
       background: var(--navy);
       color: var(--cream);
     }
+    .rsvp-form .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Autocomplete dropdown */
+    .autocomplete-wrapper { position: relative; }
+    .autocomplete-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      z-index: 100;
+      list-style: none;
+      margin: 0; padding: 0;
+      border: 1px solid rgba(26,26,26,0.25);
+      border-top: none;
+      background: var(--cream);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .autocomplete-dropdown.open { display: block; }
+    .autocomplete-dropdown li {
+      padding: 10px 12px;
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: left;
+      border-bottom: 1px solid rgba(26,26,26,0.1);
+    }
+    .autocomplete-dropdown li:last-child { border-bottom: none; }
+    .autocomplete-dropdown li:hover,
+    .autocomplete-dropdown li.active {
+      background: rgba(26,26,26,0.06);
+    }
+
+    /* Per-guest attendance rows */
+    .guest-block { padding: 24px 0; }
+    .guest-attendance-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .guest-attendance-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+    }
+    .guest-divider {
+      border: none;
+      border-top: 1px solid rgba(26,26,26,0.12);
+      margin: 0;
+    }
+
+    /* Radio toggle buttons */
+    .radio-group {
+      display: flex;
+      gap: 10px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      border: 1px solid rgba(26,26,26,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+    .radio-option input[type="radio"] { display: none; }
+    .radio-option:has(input:checked) {
+      background: var(--navy);
+      color: var(--cream);
+      border-color: var(--navy);
+    }
+    .radio-option:hover {
+      border-color: var(--navy);
+    }
+
+    /* Guest sub-fields (travel, onsite, dietary) */
+    .guest-travel-dates { margin-top: 20px; }
+    .travel-date-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .travel-date-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--navy);
+      opacity: 0.55;
+      min-width: 72px;
+    }
+    .guest-travel-dates select {
+      flex: 1;
+      width: auto;
+      padding: 6px 20px 6px 0;
+      font-size: 0.9rem;
+    }
+    .guest-onsite { margin-top: 20px; }
+    .guest-onsite > label {
+      opacity: 1 !important;
+      margin-bottom: 12px;
+    }
+    .guest-dietary { margin-top: 20px; }
+    .guest-dietary > label {
+      opacity: 1 !important;
+      margin-bottom: 12px;
+    }
+    .guest-dietary textarea {
+      height: 48px;
+    }
+
+    /* Validation error states */
+    .field-error input,
+    .field-error select {
+      border-bottom-color: #c45d3a !important;
+    }
+    .field-error .radio-group .radio-option {
+      border-color: #c45d3a;
+    }
+    .field-error-msg {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      color: #c45d3a;
+      margin-top: 6px;
+    }
+
+    /* RSVP success */
+    .rsvp-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .rsvp-success h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .rsvp-success p {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+      font-size: 1rem;
+    }
+
     @media (max-width: 600px) {
       .rsvp-form .field-row { grid-template-columns: 1fr; gap: 0; }
+      .radio-option { padding: 8px 14px; }
+      .travel-date-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .guest-travel-dates select { width: 100%; flex: none; }
     }
 
 
@@ -768,62 +936,38 @@
     <p class="body" style="margin-bottom:12px;">We've addressed your invitations to those invited. If you're not sure, let us know. We will have one child at the wedding, and he's Jordi's little brother.</p>
     <p class="body" style="margin-bottom:28px;">Sorry, no dogs (a sentence Natalie never would have expected to say). Our dog Maeby will come, and this is also her big day, so we want her to have all the attention (and we want Natalie and Jordi to not be stressed about her getting along).</p>
 
-    <form class="rsvp-form" onsubmit="return false;">
-      <div class="field-row">
-        <div class="field">
-          <label for="rsvp-name">Full name</label>
-          <input type="text" id="rsvp-name" name="name" placeholder="Your name" autocomplete="name" />
-        </div>
-        <div class="field">
-          <label for="rsvp-email">Email</label>
-          <input type="email" id="rsvp-email" name="email" placeholder="your@email.com" autocomplete="email" />
-        </div>
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label for="rsvp-attending">Attending</label>
-          <select id="rsvp-attending" name="attending">
-            <option value="" disabled selected>—</option>
-            <option value="yes">Joyfully accepts</option>
-            <option value="no">Regretfully declines</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="rsvp-guests">Number of guests</label>
-          <select id="rsvp-guests" name="guests">
-            <option value="" disabled selected>—</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4+</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label for="rsvp-stay">Staying onsite</label>
-          <select id="rsvp-stay" name="staying_onsite">
-            <option value="" disabled selected>—</option>
-            <option value="yes">Yes — I'll Venmo Natalie</option>
-            <option value="no">No, staying nearby</option>
-            <option value="maybe">Not sure yet</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="rsvp-dietary">Dietary needs</label>
-          <input type="text" id="rsvp-dietary" name="dietary" placeholder="Allergies, restrictions…" />
+    <form class="rsvp-form" id="rsvpForm" novalidate>
+      <div class="field">
+        <label for="nameInput">Full name</label>
+        <div class="autocomplete-wrapper">
+          <input type="text" id="nameInput" autocomplete="off" placeholder="Start typing your name…" />
+          <ul id="nameDropdown" class="autocomplete-dropdown" role="listbox" aria-label="Guest names"></ul>
+          <input type="hidden" id="name" name="name" />
         </div>
       </div>
 
       <div class="field">
-        <label for="rsvp-note">Anything else</label>
-        <textarea id="rsvp-note" name="note" placeholder="Notes, questions, excitement…"></textarea>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+
+      <!-- Per-guest attendance — hidden until a valid name is selected -->
+      <div class="field" id="perGuestSection">
+        <div id="perGuestRows"></div>
+      </div>
+
+      <div class="field">
+        <label for="note">Note to the couple <span style="opacity:0.5; text-transform:none;">(optional)</span></label>
+        <textarea id="note" name="note" placeholder="Notes, questions, excitement…"></textarea>
       </div>
 
       <button type="submit" class="submit-btn">Send RSVP</button>
     </form>
+
+    <div class="rsvp-success" id="rsvpSuccess">
+      <h3>Thank you!</h3>
+      <p>We can't wait to celebrate with you.</p>
+    </div>
   </section>
 
 
@@ -960,6 +1104,322 @@
     }
     // Show hero on load
     showPage('home');
+  </script>
+
+  <!-- RSVP Logic -->
+  <script>
+  (function() {
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2SHsZVSciuLazqpmfJL4iAnLF1NOPTzrbaasWjhlgVIlvRDpZAqJvUMPP_uyFWp4/exec';
+
+    var guestList = [
+      "Alicia Dunn & Aric Jacobson",
+      "Riad Adoumie & Khrystyna Pavlova & Benjamin Adoumie",
+      "Lara Adoumie",
+      "Maeva Adoumie & Behdad Kavianpour",
+      "Dominique Adoumie"
+    ];
+
+    var nameInput  = document.getElementById('nameInput');
+    var nameHidden = document.getElementById('name');
+    var dropdown   = document.getElementById('nameDropdown');
+
+    var ARRIVAL_DATES = [
+      { value: 'thu', label: 'Thu, Oct 15' },
+      { value: 'fri', label: 'Fri, Oct 16' },
+      { value: 'sat', label: 'Sat, Oct 17' }
+    ];
+
+    function makeOptions(opts) {
+      return opts.map(function(o) { return '<option value="' + o.value + '">' + o.label + '</option>'; }).join('');
+    }
+
+    function renderDropdown(matches) {
+      dropdown.innerHTML = '';
+      if (matches.length === 0) { dropdown.classList.remove('open'); return; }
+      matches.forEach(function(name) {
+        var li = document.createElement('li');
+        li.textContent = name;
+        li.setAttribute('role', 'option');
+        li.addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          selectGuest(name);
+        });
+        dropdown.appendChild(li);
+      });
+      dropdown.classList.add('open');
+    }
+
+    function selectGuest(name) {
+      nameInput.value = name;
+      nameHidden.value = name;
+      nameInput.style.borderColor = '';
+      dropdown.classList.remove('open');
+      dropdown.innerHTML = '';
+      renderPerGuestSection(name);
+    }
+
+    function renderPerGuestSection(groupName) {
+      var individuals = groupName.split(' & ').map(function(n) { return n.trim(); });
+      var container = document.getElementById('perGuestRows');
+      container.innerHTML = '';
+
+      individuals.forEach(function(guestName, i) {
+        var block = document.createElement('div');
+        block.className = 'guest-block';
+        block.innerHTML =
+          '<div class="guest-attendance-row">' +
+            '<span class="guest-attendance-name">' + guestName + '</span>' +
+            '<div class="radio-group">' +
+              '<label class="radio-option"><input type="radio" name="attend_' + i + '" value="yes"> Will attend</label>' +
+              '<label class="radio-option"><input type="radio" name="attend_' + i + '" value="no"> Will not attend</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="guest-travel-dates" id="travelDates_' + i + '" style="display:none;">' +
+            '<div class="travel-date-row">' +
+              '<span class="travel-date-label">Arriving</span>' +
+              '<select name="arrive_date_' + i + '">' +
+                '<option value="" disabled selected>Date</option>' +
+                makeOptions(ARRIVAL_DATES) +
+              '</select>' +
+              '<select name="arrive_time_' + i + '" id="arrive_time_sel_' + i + '" style="display:none;">' +
+                '<option value="" disabled selected>Dinner plans?</option>' +
+                '<option value="dinner">Joining for the Arrival Dinner</option>' +
+                '<option value="after">Coming After Dinner</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          '<div class="guest-onsite" id="guestOnsite_' + i + '" style="display:none;">' +
+            '<label>Are you staying onsite?</label>' +
+            '<div class="radio-group">' +
+              '<label class="radio-option"><input type="radio" name="onsite_' + i + '" value="yes"> Yes</label>' +
+              '<label class="radio-option"><input type="radio" name="onsite_' + i + '" value="no"> No</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="guest-dietary" id="guestDietary_' + i + '" style="display:none;">' +
+            '<label>Dietary restrictions</label>' +
+            '<textarea name="dietary_' + i + '" rows="2" placeholder="Any allergies or dietary needs?" autocomplete="off"></textarea>' +
+          '</div>';
+
+        container.appendChild(block);
+
+        // Show/hide sub-fields based on attendance
+        block.querySelectorAll('input[name="attend_' + i + '"]').forEach(function(radio) {
+          radio.addEventListener('change', function() {
+            // Clear error on this attendance row
+            var row = this.closest('.guest-attendance-row');
+            if (row) { row.classList.remove('field-error'); var m = row.querySelector('.field-error-msg'); if (m) m.remove(); }
+            var show = this.value === 'yes';
+            document.getElementById('travelDates_' + i).style.display = show ? 'block' : 'none';
+            document.getElementById('guestOnsite_' + i).style.display = show ? 'block' : 'none';
+            document.getElementById('guestDietary_' + i).style.display = show ? 'block' : 'none';
+          });
+        });
+
+        // Show dinner options only when Thursday is selected
+        block.querySelector('select[name="arrive_date_' + i + '"]').addEventListener('change', function() {
+          var tw = this.closest('.guest-travel-dates');
+          if (tw) { tw.classList.remove('field-error'); var m = tw.querySelector('.field-error-msg'); if (m) m.remove(); }
+          var timeSelect = document.getElementById('arrive_time_sel_' + i);
+          timeSelect.style.display = this.value === 'thu' ? 'inline-block' : 'none';
+          if (this.value !== 'thu') timeSelect.value = '';
+        });
+
+        // Clear onsite error on change
+        block.querySelectorAll('input[name="onsite_' + i + '"]').forEach(function(radio) {
+          radio.addEventListener('change', function() {
+            var ow = this.closest('.guest-onsite');
+            if (ow) { ow.classList.remove('field-error'); var m = ow.querySelector('.field-error-msg'); if (m) m.remove(); }
+          });
+        });
+
+        if (i < individuals.length - 1) {
+          container.insertAdjacentHTML('beforeend', '<hr class="guest-divider">');
+        }
+      });
+
+      // perGuestSection is always visible; rows are populated dynamically
+    }
+
+    // Autocomplete input handler
+    nameInput.addEventListener('input', function() {
+      nameHidden.value = '';
+      var w = nameInput.closest('.field');
+      if (w) { w.classList.remove('field-error'); var m = w.querySelector('.field-error-msg'); if (m) m.remove(); }
+      var query = this.value.trim().toLowerCase();
+      if (!query) {
+        dropdown.classList.remove('open');
+        dropdown.innerHTML = '';
+        document.getElementById('perGuestRows').innerHTML = '';
+        return;
+      }
+      var matches = guestList.filter(function(n) {
+        var words = n.toLowerCase().split(/\s+/);
+        return words.some(function(_, i) { return words.slice(i).join(' ').startsWith(query); });
+      });
+      renderDropdown(matches);
+    });
+
+    // Keyboard navigation for dropdown
+    nameInput.addEventListener('keydown', function(e) {
+      var items = dropdown.querySelectorAll('li');
+      var active = dropdown.querySelector('li.active');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!active) { items[0] && items[0].classList.add('active'); }
+        else { active.classList.remove('active'); var next = active.nextElementSibling; (next || items[0]).classList.add('active'); }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!active) { items[items.length - 1] && items[items.length - 1].classList.add('active'); }
+        else { active.classList.remove('active'); var prev = active.previousElementSibling; (prev || items[items.length - 1]).classList.add('active'); }
+      } else if (e.key === 'Enter') {
+        if (active) { e.preventDefault(); selectGuest(active.textContent); }
+      } else if (e.key === 'Escape') {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    nameInput.addEventListener('blur', function() {
+      setTimeout(function() { dropdown.classList.remove('open'); }, 150);
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.autocomplete-wrapper')) dropdown.classList.remove('open');
+    });
+
+    document.getElementById('email').addEventListener('input', function() {
+      var w = this.closest('.field');
+      if (w) { w.classList.remove('field-error'); var m = w.querySelector('.field-error-msg'); if (m) m.remove(); }
+    });
+
+    // Validation helpers
+    function clearAllErrors() {
+      document.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('field-error'); });
+      document.querySelectorAll('.field-error-msg').forEach(function(el) { el.remove(); });
+    }
+
+    function markError(wrapper, msg) {
+      if (!wrapper) return;
+      wrapper.classList.add('field-error');
+      var msgEl = document.createElement('div');
+      msgEl.className = 'field-error-msg';
+      msgEl.textContent = msg;
+      wrapper.appendChild(msgEl);
+    }
+
+    // Form submission
+    document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var form = e.target;
+      var btn = form.querySelector('.submit-btn');
+
+      // Always clear all errors first, then re-check everything
+      clearAllErrors();
+
+      var errors = []; // collect { element, wrapper, message }
+
+      // 1. Name from guest list
+      var selectedName = document.getElementById('name').value;
+      var nameField = document.getElementById('nameInput').closest('.field');
+      if (!guestList.includes(selectedName)) {
+        errors.push({ el: nameField, msg: 'Please select your name from the list' });
+      }
+
+      // 2. Email
+      var emailField = form.elements.email.closest('.field');
+      if (!form.elements.email.value.trim()) {
+        errors.push({ el: emailField, msg: 'Required' });
+      }
+
+      // 3. Per-guest fields (only if name is valid)
+      if (guestList.includes(selectedName)) {
+        var individuals = selectedName.split(' & ').map(function(n) { return n.trim(); });
+        for (var v = 0; v < individuals.length; v++) {
+          // Attendance
+          var attendRadio = form.querySelector('input[name="attend_' + v + '"]:checked');
+          var blocks = document.getElementById('perGuestRows').querySelectorAll('.guest-block');
+          var attendRow = blocks[v] ? blocks[v].querySelector('.guest-attendance-row') : null;
+
+          if (!attendRadio) {
+            errors.push({ el: attendRow, msg: 'Please select attendance for ' + individuals[v] });
+          } else if (attendRadio.value === 'yes') {
+            // Arrival date
+            var arrDate = form.querySelector('select[name="arrive_date_' + v + '"]');
+            var travelWrap = document.getElementById('travelDates_' + v);
+            if (!arrDate.value) {
+              errors.push({ el: travelWrap, msg: 'Please select an arrival date' });
+            } else if (arrDate.value === 'thu') {
+              var dinnerSel = form.querySelector('select[name="arrive_time_' + v + '"]');
+              if (!dinnerSel.value) {
+                errors.push({ el: travelWrap, msg: 'Please select your dinner plans' });
+              }
+            }
+
+            // Onsite
+            var onsiteRadio = form.querySelector('input[name="onsite_' + v + '"]:checked');
+            var onsiteWrap = document.getElementById('guestOnsite_' + v);
+            if (!onsiteRadio) {
+              errors.push({ el: onsiteWrap, msg: 'Please select onsite or offsite' });
+            }
+          }
+        }
+      }
+
+      // If any errors, mark them all and scroll to the first one
+      if (errors.length > 0) {
+        errors.forEach(function(err) { markError(err.el, err.msg); });
+        errors[0].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      var selectedGroup = selectedName;
+      var individuals = selectedGroup.split(' & ').map(function(n) { return n.trim(); });
+
+      var DATE_LABELS = { thu: 'Thu Oct 15', fri: 'Fri Oct 16', sat: 'Sat Oct 17' };
+      var DINNER_LABELS = { dinner: 'Joining for the Arrival Dinner', after: 'Coming After Dinner' };
+
+      var guests = individuals.map(function(guestName, i) {
+        var radio = form.querySelector('input[name="attend_' + i + '"]:checked');
+        var attending = radio ? radio.value === 'yes' : false;
+
+        var arriveDate = attending ? (form.querySelector('select[name="arrive_date_' + i + '"]').value || '') : '';
+        var arriveTime = attending ? (form.querySelector('select[name="arrive_time_' + i + '"]').value || '') : '';
+        var arrives = '';
+        if (arriveDate) {
+          arrives = DATE_LABELS[arriveDate];
+          if (arriveDate === 'thu' && arriveTime) arrives += ' (' + DINNER_LABELS[arriveTime] + ')';
+        }
+
+        var onsiteRadio = attending ? form.querySelector('input[name="onsite_' + i + '"]:checked') : null;
+
+        return {
+          name: guestName,
+          group: selectedGroup,
+          email: form.elements.email.value,
+          attending: radio ? (radio.value === 'yes' ? 'Yes' : 'No') : 'No response',
+          arrives: arrives,
+          onsite: onsiteRadio ? (onsiteRadio.value === 'yes' ? 'Yes' : 'No') : '',
+          dietary: attending ? (form.querySelector('textarea[name="dietary_' + i + '"]').value || '').trim() : '',
+          note: form.elements.note.value
+        };
+      });
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify({ guests: guests })
+        });
+      } catch (err) {
+        console.error('Submission error:', err);
+      }
+
+      form.style.display = 'none';
+      document.getElementById('rsvpSuccess').style.display = 'block';
+    });
+  })();
   </script>
 </body>
 </html>
