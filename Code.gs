@@ -76,6 +76,24 @@ function sendConfirmationEmail(guests) {
     lines.push('');
   }
 
+  // Venmo info for onsite guests
+  var onsiteCount = 0;
+  guests.forEach(function(g) {
+    if (g.attending === 'Yes' && g.onsite === 'Yes') onsiteCount++;
+  });
+  if (onsiteCount > 0) {
+    var total = onsiteCount * 275;
+    lines.push('---');
+    lines.push('');
+    lines.push('ONSITE ACCOMMODATION');
+    lines.push('The fee for staying onsite at Wildhaven is $275 per person.');
+    lines.push('Total for your group: $' + total + ' (' + onsiteCount + (onsiteCount === 1 ? ' guest' : ' guests') + ' \u00d7 $275)');
+    lines.push('');
+    lines.push('Please Venmo Natalie at: @Natali-Dunn');
+    lines.push('(https://venmo.com/u/Natali-Dunn)');
+    lines.push('');
+  }
+
   lines.push('If anything changes, just submit the form again and we\'ll update your info.');
   lines.push('');
   lines.push('See you in Sonoma!');
