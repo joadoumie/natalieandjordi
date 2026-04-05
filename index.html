@@ -982,17 +982,12 @@
   }
   var input = document.getElementById('pw-input');
   var err   = document.getElementById('pw-error');
-  input.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
+  input.addEventListener('input', function () {
     if (input.value.trim().toLowerCase() === PASS) {
       sessionStorage.setItem('wv_unlocked', '1');
       var gate = document.getElementById('pw-gate');
       gate.classList.add('open');
       setTimeout(function () { gate.style.display = 'none'; }, 1000);
-    } else {
-      err.classList.add('show');
-      input.value = '';
-      setTimeout(function () { err.classList.remove('show'); }, 2200);
     }
   });
 })();
