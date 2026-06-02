@@ -12,11 +12,18 @@ on:
 
 jobs:
   claude:
+    # Only joadoumie and nataliedunn can ever trigger Claude, AND only when
+    # "@claude" is explicitly mentioned. github.actor is the user who triggered
+    # the event (commenter / issue author); it is set by GitHub and cannot be
+    # spoofed. This blocks anyone else on this public repo from kicking off a
+    # session.
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      (github.actor == 'joadoumie' || github.actor == 'nataliedunn') && (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      )
     runs-on: ubuntu-latest
     permissions:
       contents: read
