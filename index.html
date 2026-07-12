@@ -1510,8 +1510,22 @@
         }
         var input = document.getElementById("pw-input");
         var err = document.getElementById("pw-error");
+        var nav = document.querySelector("nav");
+        function refreshStickyNav() {
+          // WebKit can fail to recompute a `position: sticky` element's
+          // offset when the page is scrolled by script (rather than a
+          // real user gesture) while it's covered by the fixed,
+          // full-screen password gate. The nav then renders as if still
+          // scrolled out of view even though window.scrollY is back to 0.
+          // Toggling the position property forces Safari to reflow it.
+          if (!nav) return;
+          nav.style.position = "static";
+          void nav.offsetHeight;
+          nav.style.position = "";
+        }
         function forceScrollTop() {
           window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+          refreshStickyNav();
         }
         input.addEventListener("input", function () {
           if (input.value.trim().toLowerCase() === PASS) {
@@ -1538,6 +1552,7 @@
             }
             setTimeout(function () {
               gate.style.display = "none";
+              refreshStickyNav();
             }, 2600);
             setTimeout(function () {
               clearInterval(reScrollInterval);
@@ -1552,6 +1567,7 @@
                   forceScrollTop,
                 );
               }
+              refreshStickyNav();
             }, 4500);
           }
         });
