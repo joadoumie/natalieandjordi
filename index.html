@@ -1511,22 +1511,39 @@
         var input = document.getElementById("pw-input");
         var err = document.getElementById("pw-error");
         var nav = document.querySelector("nav");
+
+        // iOS Safari scrolls the real document (not just the visual
+        // viewport) to keep the focused password input clear of the
+        // keyboard, even though that input lives inside a `position:
+        // fixed` overlay. That scroll — happening while the page is
+        // covered by the fixed, full-screen gate — is what left the
+        // `position: sticky` nav with a stale offset once the gate
+        // closed; scrolling back afterwards and forcing a reflow didn't
+        // reliably fix it. Pinning the body with `position: fixed` for
+        // the gate's lifetime stops the document from moving in the
+        // first place, so there's nothing left for WebKit to get wrong.
+        document.body.style.position = "fixed";
+        document.body.style.top = "0";
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+
         function refreshStickyNav() {
-          // WebKit can fail to recompute a `position: sticky` element's
-          // offset when the page is scrolled by script (rather than a
-          // real user gesture) while it's covered by the fixed,
-          // full-screen password gate. The nav then renders as if still
-          // scrolled out of view even though window.scrollY is back to 0.
-          // Toggling the position property forces Safari to reflow it.
+          // Defensive reflow in case releasing the lock below still
+          // leaves the nav's sticky offset stale.
           if (!nav) return;
           nav.style.position = "static";
           void nav.offsetHeight;
           nav.style.position = "";
         }
-        function forceScrollTop() {
-          window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+        function unlockScroll() {
+          document.body.style.position = "";
+          document.body.style.top = "";
+          document.body.style.left = "";
+          document.body.style.right = "";
           refreshStickyNav();
         }
+
         input.addEventListener("input", function () {
           if (input.value.trim().toLowerCase() === PASS) {
             input.blur();
@@ -1535,40 +1552,11 @@
             }
             sessionStorage.setItem("wv_unlocked", "1");
             var gate = document.getElementById("pw-gate");
-            forceScrollTop();
             gate.classList.add("open");
-            // On some iPhones the keyboard-dismiss animation (especially
-            // with the QuickType/autofill bar) re-scrolls the page well
-            // after this handler runs, and sometimes fires a
-            // visualViewport "scroll" event instead of "resize". Keep
-            // forcing the page back to the top and listen to both events
-            // for a while longer than the gate's own transition to
-            // cover slower devices.
-            var reScrollInterval = setInterval(forceScrollTop, 100);
-            window.addEventListener("scroll", forceScrollTop);
-            if (window.visualViewport) {
-              window.visualViewport.addEventListener("resize", forceScrollTop);
-              window.visualViewport.addEventListener("scroll", forceScrollTop);
-            }
             setTimeout(function () {
               gate.style.display = "none";
-              refreshStickyNav();
+              unlockScroll();
             }, 2600);
-            setTimeout(function () {
-              clearInterval(reScrollInterval);
-              window.removeEventListener("scroll", forceScrollTop);
-              if (window.visualViewport) {
-                window.visualViewport.removeEventListener(
-                  "resize",
-                  forceScrollTop,
-                );
-                window.visualViewport.removeEventListener(
-                  "scroll",
-                  forceScrollTop,
-                );
-              }
-              refreshStickyNav();
-            }, 4500);
           }
         });
       })();
