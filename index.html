@@ -361,8 +361,10 @@
 
       /* ── SCHEDULE DROPDOWNS ── */
       .schedule-accordion {
+        border-top: 1px solid rgba(26, 26, 26, 0.12);
       }
       .schedule-accordion details {
+        border-bottom: 1px solid rgba(26, 26, 26, 0.12);
       }
       .schedule-accordion details summary {
         display: flex;
@@ -381,7 +383,7 @@
         font-family: "DM Sans", sans-serif;
         font-size: 1.3rem;
         font-weight: 300;
-        color: var(--burgundy);
+        color: var(--navy);
         transition: transform 0.25s;
         flex-shrink: 0;
       }
@@ -402,6 +404,38 @@
       .schedule-accordion details[open] summary {
       }
       .schedule-accordion details[open] .day-name {
+      }
+      .schedule-accordion .day-date {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--navy);
+        margin-left: 8px;
+      }
+      .sched-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 7px 0;
+      }
+      .sched-time {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--navy);
+        flex-shrink: 0;
+      }
+      .sched-time::after {
+        content: "|";
+        margin-left: 10px;
+      }
+      .sched-event {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--navy);
       }
 
       /* ── TRAVEL ── */
@@ -1008,6 +1042,22 @@
         .schedule-accordion .day-name {
           font-size: 0.93rem;
         }
+        .schedule-accordion .day-date {
+          font-size: 0.93rem;
+          margin-left: 10px;
+        }
+        .sched-row {
+          gap: 8px;
+        }
+        .sched-time {
+          font-size: 0.93rem;
+        }
+        .sched-time::after {
+          margin-left: 8px;
+        }
+        .sched-event {
+          font-size: 0.93rem;
+        }
         .rsvp-form .field-row {
           grid-template-columns: 1fr;
           gap: 0;
@@ -1325,8 +1375,112 @@
           <p class="body" style="margin-bottom: 28px">
             We plan to be hanging at the camp all weekend! If you're not staying
             onsite, you are welcome to hang there as much as you'd like and to
-            join for all meals, etc. For now, check in at 6PM on Thursday and checkout 11AM Sunday. Detailed schedule to come!
+            join for all meals, etc. Everything below is optional (except the
+            wedding, please come to that) — come and go as works for you.
           </p>
+
+          <div class="schedule-accordion">
+            <details open>
+              <summary>
+                <span class="day-name"
+                  >Thursday,<span class="day-date">Oct 15</span></span
+                >
+              </summary>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">5PM</span>
+                  <span class="sched-event"
+                    >Arrive anytime after 5PM, get unpacked, kick your feet up,
+                    settle in. If you're not staying onsite, you're welcome to
+                    join, as well!</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">7PM</span>
+                  <span class="sched-event"
+                    >Dinner, s'mores, firepit. Late night sauna if you're
+                    feeling it!</span
+                  >
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="day-name"
+                  >Friday,<span class="day-date">Oct 16</span></span
+                >
+              </summary>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event">Coffee, breakfast, yoga.</span>
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Day</span>
+                  <span class="sched-event"
+                    >Day at the river! Hang at the beach, swim in the Russian
+                    River, sauna, play games, BBQ lunch.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Night</span>
+                  <span class="sched-event">Lobster boil and stargazing.</span>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="day-name"
+                  >Saturday,<span class="day-date">Oct 17</span></span
+                >
+              </summary>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event"
+                    >Wedding day! Coffee, breakfast, yoga.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Day</span>
+                  <span class="sched-event"
+                    >Relax, go to the river, go on a nature walk, check out
+                    town.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">4PM to midnight</span>
+                  <span class="sched-event"
+                    >Ceremony, cocktails, dinner and dancing.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Midnight to late</span>
+                  <span class="sched-event">Dance party.</span>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                <span class="day-name"
+                  >Sunday,<span class="day-date">Oct 18</span></span
+                >
+              </summary>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event">Coffee and breakfast.</span>
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">11AM</span>
+                  <span class="sched-event">Checkout &amp; goodbyes.</span>
+                </div>
+              </div>
+            </details>
+          </div>
         </div>
 
         <div class="details-sub">
