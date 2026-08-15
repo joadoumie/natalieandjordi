@@ -363,32 +363,13 @@
       .schedule-accordion {
         border-top: 1px solid rgba(26, 26, 26, 0.12);
       }
-      .schedule-accordion details {
+      .schedule-accordion .sched-day {
         border-bottom: 1px solid rgba(26, 26, 26, 0.12);
       }
-      .schedule-accordion details summary {
+      .schedule-accordion .day-head {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         padding: 18px 0;
-        cursor: pointer;
-        list-style: none;
-        user-select: none;
-      }
-      .schedule-accordion details summary::-webkit-details-marker {
-        display: none;
-      }
-      .schedule-accordion details summary::after {
-        content: "+";
-        font-family: "DM Sans", sans-serif;
-        font-size: 1.3rem;
-        font-weight: 300;
-        color: var(--navy);
-        transition: transform 0.25s;
-        flex-shrink: 0;
-      }
-      .schedule-accordion details[open] summary::after {
-        transform: rotate(45deg);
       }
       .schedule-accordion .day-name {
         font-family: "DM Sans", sans-serif;
@@ -400,10 +381,6 @@
       }
       .schedule-accordion .day-body {
         padding: 0 0 20px 0;
-      }
-      .schedule-accordion details[open] summary {
-      }
-      .schedule-accordion details[open] .day-name {
       }
       .schedule-accordion .day-date {
         font-family: "DM Sans", sans-serif;
@@ -423,16 +400,10 @@
       .sched-time {
         font-family: "DM Sans", sans-serif;
         font-size: 1rem;
+        font-weight: 700;
         line-height: 1.6;
         color: var(--navy);
         flex: 0 0 104px;
-        position: relative;
-        padding-right: 14px;
-      }
-      .sched-time::after {
-        content: "|";
-        position: absolute;
-        right: 0;
       }
       .sched-event {
         font-family: "DM Sans", sans-serif;
@@ -1035,7 +1006,7 @@
         .airport-info {
           font-size: 0.9rem;
         }
-        .schedule-accordion details summary {
+        .schedule-accordion .day-head {
           padding: 14px 0;
         }
         .schedule-accordion .day-name {
@@ -1051,7 +1022,6 @@
         .sched-time {
           font-size: 0.93rem;
           flex-basis: 96px;
-          padding-right: 12px;
         }
         .sched-event {
           font-size: 0.93rem;
@@ -1378,12 +1348,12 @@
           </p>
 
           <div class="schedule-accordion">
-            <details open>
-              <summary>
+            <div class="sched-day">
+              <div class="day-head">
                 <span class="day-name"
                   >Thursday,<span class="day-date">Oct 15</span></span
                 >
-              </summary>
+              </div>
               <div class="day-body">
                 <div class="sched-row">
                   <span class="sched-time">Night</span>
@@ -1395,14 +1365,14 @@
                   >
                 </div>
               </div>
-            </details>
+            </div>
 
-            <details>
-              <summary>
+            <div class="sched-day">
+              <div class="day-head">
                 <span class="day-name"
                   >Friday,<span class="day-date">Oct 16</span></span
                 >
-              </summary>
+              </div>
               <div class="day-body">
                 <div class="sched-row">
                   <span class="sched-time">Morning</span>
@@ -1422,14 +1392,14 @@
                   >
                 </div>
               </div>
-            </details>
+            </div>
 
-            <details>
-              <summary>
+            <div class="sched-day">
+              <div class="day-head">
                 <span class="day-name"
                   >Saturday,<span class="day-date">Oct 17</span></span
                 >
-              </summary>
+              </div>
               <div class="day-body">
                 <div class="sched-row">
                   <span class="sched-time">Morning</span>
@@ -1457,21 +1427,21 @@
                   <span class="sched-event">Dance party.</span>
                 </div>
               </div>
-            </details>
+            </div>
 
-            <details>
-              <summary>
+            <div class="sched-day">
+              <div class="day-head">
                 <span class="day-name"
                   >Sunday,<span class="day-date">Oct 18</span></span
                 >
-              </summary>
+              </div>
               <div class="day-body">
                 <div class="sched-row">
                   <span class="sched-time">Morning</span>
                   <span class="sched-event">Coffee and breakfast. 11AM checkout.</span>
                 </div>
               </div>
-            </details>
+            </div>
           </div>
         </div>
 
