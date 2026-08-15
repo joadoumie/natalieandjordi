@@ -361,32 +361,15 @@
 
       /* ── SCHEDULE DROPDOWNS ── */
       .schedule-accordion {
+        border-top: 1px solid rgba(26, 26, 26, 0.12);
       }
-      .schedule-accordion details {
+      .schedule-accordion .sched-day {
+        border-bottom: 1px solid rgba(26, 26, 26, 0.12);
       }
-      .schedule-accordion details summary {
+      .schedule-accordion .day-head {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         padding: 18px 0;
-        cursor: pointer;
-        list-style: none;
-        user-select: none;
-      }
-      .schedule-accordion details summary::-webkit-details-marker {
-        display: none;
-      }
-      .schedule-accordion details summary::after {
-        content: "+";
-        font-family: "DM Sans", sans-serif;
-        font-size: 1.3rem;
-        font-weight: 300;
-        color: var(--burgundy);
-        transition: transform 0.25s;
-        flex-shrink: 0;
-      }
-      .schedule-accordion details[open] summary::after {
-        transform: rotate(45deg);
       }
       .schedule-accordion .day-name {
         font-family: "DM Sans", sans-serif;
@@ -399,9 +382,34 @@
       .schedule-accordion .day-body {
         padding: 0 0 20px 0;
       }
-      .schedule-accordion details[open] summary {
+      .schedule-accordion .day-date {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--navy);
+        margin-left: 8px;
       }
-      .schedule-accordion details[open] .day-name {
+      .sched-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 7px 0;
+      }
+      .sched-time {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.6;
+        color: var(--navy);
+        flex: 0 0 104px;
+      }
+      .sched-event {
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--navy);
       }
 
       /* ── TRAVEL ── */
@@ -440,20 +448,19 @@
       /* ── PACKING ── */
       .packing-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 0;
       }
       .packing-item {
         font-family: "DM Sans", sans-serif;
         font-size: 0.95rem;
-        padding: 11px 0;
-        border-bottom: 1px solid rgba(26, 32, 53, 0.18);
+        padding: 6px 0;
         display: flex;
         align-items: flex-start;
         gap: 12px;
       }
       .packing-item::before {
-        content: "□";
+        content: "•";
         color: var(--burgundy);
         flex-shrink: 0;
       }
@@ -993,19 +1000,30 @@
         .two-col {
           gap: 32px;
         }
-        .packing-grid {
-          grid-template-columns: 1fr;
-        }
         .airport-row {
           gap: 14px;
         }
         .airport-info {
           font-size: 0.9rem;
         }
-        .schedule-accordion details summary {
+        .schedule-accordion .day-head {
           padding: 14px 0;
         }
         .schedule-accordion .day-name {
+          font-size: 0.93rem;
+        }
+        .schedule-accordion .day-date {
+          font-size: 0.93rem;
+          margin-left: 10px;
+        }
+        .sched-row {
+          gap: 8px;
+        }
+        .sched-time {
+          font-size: 0.93rem;
+          flex-basis: 96px;
+        }
+        .sched-event {
           font-size: 0.93rem;
         }
         .rsvp-form .field-row {
@@ -1324,9 +1342,107 @@
 
           <p class="body" style="margin-bottom: 28px">
             We plan to be hanging at the camp all weekend! If you're not staying
-            onsite, you are welcome to hang there as much as you'd like and to
-            join for all meals, etc. For now, check in at 6PM on Thursday and checkout 11AM Sunday. Detailed schedule to come!
+            onsite, you are welcome to spend as much time here as you'd like and to
+            join for all meals, etc. Everything below is optional (except the
+            wedding, please come to that). Come and go as works for you! You will get a detailed itinerary upon arrival.
           </p>
+
+          <div class="schedule-accordion">
+            <div class="sched-day">
+              <div class="day-head">
+                <span class="day-name"
+                  >Thursday,<span class="day-date">Oct 15</span></span
+                >
+              </div>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Night</span>
+                  <span class="sched-event"
+                    >Arrive anytime after 5PM, get unpacked, kick your feet up,
+                    settle in. If you're not staying onsite, you're welcome to
+                    join as well! Marin favorite, Sol Food, for dinner. S'mores, firepit, late night sauna if you're
+                    feeling it!</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="sched-day">
+              <div class="day-head">
+                <span class="day-name"
+                  >Friday,<span class="day-date">Oct 16</span></span
+                >
+              </div>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event">Coffee, breakfast, yoga.</span>
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Day</span>
+                  <span class="sched-event"
+                    >Day at the river! Hang at the beach, swim in the Russian
+                    River, sauna, play games, BBQ lunch.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Night</span>
+                  <span class="sched-event"
+                    >Lobster boil and stargazing. Dress code: dressy casual with layers for stargazing.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="sched-day">
+              <div class="day-head">
+                <span class="day-name"
+                  >Saturday,<span class="day-date">Oct 17</span></span
+                >
+              </div>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event"
+                    >Wedding day! Coffee, breakfast, yoga.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Day</span>
+                  <span class="sched-event"
+                    >Relax, go to the river, go on a nature walk, check out
+                    town.</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Afternoon</span>
+                  <span class="sched-event"
+                    >4PM ceremony, cocktails, dinner and dancing. Dress code:
+                    cocktail (we will be on grass and sand, so make sure your shoes work
+                    for that!).</span
+                  >
+                </div>
+                <div class="sched-row">
+                  <span class="sched-time">Late Night</span>
+                  <span class="sched-event">Dance party.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sched-day">
+              <div class="day-head">
+                <span class="day-name"
+                  >Sunday,<span class="day-date">Oct 18</span></span
+                >
+              </div>
+              <div class="day-body">
+                <div class="sched-row">
+                  <span class="sched-time">Morning</span>
+                  <span class="sched-event">Coffee and breakfast. So many hugs. 11AM checkout.</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="details-sub">
@@ -1337,9 +1453,34 @@
           />
 
           <p class="body" style="margin-bottom: 24px">
-            We will share more about what you should bring as we get closer to
-            October. For now, the wedding on Saturday will be cocktail attire.
+            Since we will be glamping, the basics will be provided (linens, towels,
+            etc.). Healdsburg has a historic average of 77 high and 49 low
+            this time of year, so we recommend bringing layers, and something
+            cozy to wear at night. On top of the standard items for a weekend
+            away, here are other things we will be bringing:
           </p>
+
+          <div class="packing-grid">
+            <div class="packing-item">
+              We will probably spend much of the weekend in swimsuits! We have
+              private access to the beautiful Russian River and we will also be
+              bringing in a sauna to enjoy for the weekend
+            </div>
+            <div class="packing-item">
+              There will be yoga classes and nature walks, so if you're
+              interested bring exercise clothes and comfortable shoes
+            </div>
+            <div class="packing-item">Dressy casual attire for Friday night</div>
+            <div class="packing-item">
+              Cocktail attire for Saturday night (we will be on grass and sand,
+              so make sure your shoes work for that!)
+            </div>
+            <div class="packing-item">Sunglasses</div>
+            <div class="packing-item">Water bottle</div>
+            <div class="packing-item">Sandals</div>
+            <div class="packing-item">Jacket</div>
+            <div class="packing-item">Hat</div>
+          </div>
         </div>
 
         <div class="details-sub">
