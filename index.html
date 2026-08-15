@@ -425,11 +425,14 @@
         font-size: 1rem;
         line-height: 1.6;
         color: var(--navy);
-        flex-shrink: 0;
+        flex: 0 0 104px;
+        position: relative;
+        padding-right: 14px;
       }
       .sched-time::after {
         content: "|";
-        margin-left: 10px;
+        position: absolute;
+        right: 0;
       }
       .sched-event {
         font-family: "DM Sans", sans-serif;
@@ -1051,9 +1054,8 @@
         }
         .sched-time {
           font-size: 0.93rem;
-        }
-        .sched-time::after {
-          margin-left: 8px;
+          flex-basis: 96px;
+          padding-right: 12px;
         }
         .sched-event {
           font-size: 0.93rem;
@@ -1374,7 +1376,7 @@
 
           <p class="body" style="margin-bottom: 28px">
             We plan to be hanging at the camp all weekend! If you're not staying
-            onsite, you are welcome to spend as much time there as you'd like and to
+            onsite, you are welcome to spend as much time here as you'd like and to
             join for all meals, etc. Everything below is optional (except the
             wedding, please come to that). Come and go as works for you! You will get a detailed itinerary upon arrival.
           </p>
